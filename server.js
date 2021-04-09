@@ -8,7 +8,7 @@ const conn = require("./connection");
 const Buildings = require("./models/buildings-model");
 const Photos = require("./models/photos-model");
 // const Streets = require("./models/streets-model");
-// const Surroundings = require("./models/surroundings-model");
+const Surroundings = require("./models/surroundings-model");
 // const Users = require("./models/users-model");
 
 const app = express();
@@ -42,9 +42,31 @@ app.get("/", function (req, res) {
 //Api routes
 // create new routes using api - good RESTful practice
 
-//Get all buildings
+//Get Buildings,Surroundings and Photos
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
+
 const router = express.Router();
 app.use("/api", router);
+
+router.get("/bss", (req, res) => {
+  var promises = [];
+  promises.push(Buildings.find({}).lean());
+  promises.push(Surroundings.find({}).lean());
+  promises.push(Photos.find({}).lean());
+
+  Promise.all(promises)
+    .then((results) => {
+      // merge using rest operator - very new
+      var combinedArray = [...results[0], ...results[1], ...results[2]];
+      shuffle(combinedArray);
+      res.json({ result: combinedArray });
+    })
+    .catch((err) => {
+      res.json({ result: false });
+    });
+});
 
 router.get("/buildings", (req, res) => {
   Buildings.find().then(
