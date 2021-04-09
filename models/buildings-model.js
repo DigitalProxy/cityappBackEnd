@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var BuildingsSchema = new Schema(
   {
+    id: String,
     title: String,
     name: String,
     email: String,

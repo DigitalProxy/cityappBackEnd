@@ -6,8 +6,7 @@ const conn = require("./connection");
 
 //One model per collection
 const Buildings = require("./models/buildings-model");
-const Photos = require("./models/photos-model");
-// const Streets = require("./models/streets-model");
+const Streets = require("./models/streets-model");
 const Surroundings = require("./models/surroundings-model");
 // const Users = require("./models/users-model");
 
@@ -41,20 +40,20 @@ app.get("/", function (req, res) {
 
 //Api routes
 // create new routes using api - good RESTful practice
+const router = express.Router();
+app.use("/api", router);
 
-//Get Buildings,Surroundings and Photos
+
+//Get Buildings,Streets and Settings
 function shuffle(array) {
   array.sort(() => Math.random() - 0.5);
 }
 
-const router = express.Router();
-app.use("/api", router);
-
 router.get("/bss", (req, res) => {
   var promises = [];
   promises.push(Buildings.find({}).lean());
+  promises.push(Streets.find({}).lean());
   promises.push(Surroundings.find({}).lean());
-  promises.push(Photos.find({}).lean());
 
   Promise.all(promises)
     .then((results) => {
@@ -79,11 +78,12 @@ router.get("/buildings", (req, res) => {
   );
 });
 
-//Get all photos
-router.get("/photos", (req, res) => {
-  Photos.find().then(
-    (photosArray) => {
-      res.json(photosArray);
+
+//Get all streets
+router.get("/streets", (req, res) => {
+  Streets.find().then(
+    (streetsArray) => {
+      res.json(streetsArray);
     },
     () => {
       res.json({ result: false });
@@ -91,47 +91,11 @@ router.get("/photos", (req, res) => {
   );
 });
 
-//Get all streets
-// router.get("/streets", (req, res) => {
-//   Streets.find().then(
-//     (streetsArray) => {
-//       res.json(streetsArray);
-//     },
-//     () => {
-//       res.json({ result: false });
-//     }
-//   );
-// });
-
 //Get all surroundings
-// router.get("/surroundings", (req, res) => {
-//   Surroundings.find().then(
-//     (surroundingsArray) => {
-//       res.json(surroundingsArray);
-//     },
-//     () => {
-//       res.json({ result: false });
-//     }
-//   );
-// });
-
-//Get all users
-// router.get("/users", (req, res) => {
-//   Users.find().then(
-//     (usersArray) => {
-//       res.json(usersArray);
-//     },
-//     () => {
-//       res.json({ result: false });
-//     }
-//   );
-// });
-
-// find and return a single user based upon id - not _id
-router.get("/photos/:id", (req, res) => {
-  Photos.findOne({ id: req.params.id }).then(
-    (photosArray) => {
-      res.json(photosArray);
+router.get("/surroundings", (req, res) => {
+  Surroundings.find().then(
+    (surroundingsArray) => {
+      res.json(surroundingsArray);
     },
     () => {
       res.json({ result: false });

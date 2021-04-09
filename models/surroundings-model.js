@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var SurroundingsSchema = new Schema(
   {
+    id: String,
     title: {type: String,required:true},
     name: String,
     email: String,
