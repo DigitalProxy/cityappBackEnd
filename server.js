@@ -136,6 +136,29 @@ router.get("/*", (req, res) => {
   return res.json({ result: "not a valid endpoint" });
 });
 
+//post user profile to DB
+router.post("/users", (req, res) => { 
+  console.log("add new user - endpoint called")
+  // create instance users model 
+  var newuser = new Users(); 
+  var reactForm = req.body; 
+
+  // copy form data into instance. nice. 
+  Object.assign(newuser, reactForm); 
+
+  // for debug only 
+  console.log(">>> ", reactForm); 
+
+  newuser.save().then( 
+    (result) => { 
+      return res.json(result); 
+    }, 
+    () => { 
+      return res.send("problem adding new user"); 
+    } 
+  ); 
+}); 
+
 let PORT = 4000;
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
