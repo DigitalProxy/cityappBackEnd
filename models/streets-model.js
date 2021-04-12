@@ -4,11 +4,13 @@ var Schema = mongoose.Schema;
 var StreetsSchema = new Schema(
   {
     id: String,
-    title: {type: String,required:true},
+    username: String,
+    title: String,
     name: String,
     email: String,
     type_id: String,
     filepath: String,
+    comment: String,
   },
   
   {

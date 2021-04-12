@@ -4,11 +4,13 @@ var Schema = mongoose.Schema;
 var SurroundingsSchema = new Schema(
   {
     id: String,
+    username: String,
     title: {type: String,required:true},
     name: String,
     email: String,
     type_id: String,
     filepath: String,
+    comment: String,
   },
   
   {

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var UsersSchema = new Schema(
+var UserSchema = new Schema(
   {
     _id: String,
     username: String,
@@ -23,4 +23,4 @@ var UsersSchema = new Schema(
 );
 
 // singular capitalized name for the mongo collection - Photo
-module.exports = mongoose.model("Users", UsersSchema);
+module.exports = mongoose.model("User", UserSchema);

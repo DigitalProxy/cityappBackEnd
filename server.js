@@ -8,7 +8,7 @@ const conn = require("./connection");
 const Buildings = require("./models/buildings-model");
 const Streets = require("./models/streets-model");
 const Surroundings = require("./models/surroundings-model");
-// const Users = require("./models/users-model");
+const Users = require("./models/users-model");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,7 +43,6 @@ app.get("/", function (req, res) {
 const router = express.Router();
 app.use("/api", router);
 
-
 //Get Buildings,Streets and Settings
 function shuffle(array) {
   array.sort(() => Math.random() - 0.5);
@@ -65,6 +64,17 @@ router.get("/bss", (req, res) => {
     .catch((err) => {
       res.json({ result: false });
     });
+});
+
+router.get("/users", (req, res) => {
+  Users.find({}).then(
+    (usersArray) => {
+      res.json(usersArray);
+    },
+    () => {
+      res.json({ result: false });
+    }
+  );
 });
 
 router.get("/buildings", (req, res) => {

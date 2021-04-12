@@ -4,11 +4,13 @@ var Schema = mongoose.Schema;
 var BuildingsSchema = new Schema(
   {
     id: String,
+    username: String,
     title: String,
     name: String,
     email: String,
     type_id: String,
     filepath: String,
+    comment: String,
   },
   
   {
