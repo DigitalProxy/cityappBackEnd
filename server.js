@@ -66,6 +66,24 @@ router.get("/bss", (req, res) => {
     });
 });
 
+router.get("/bss_username", (req, res) => {
+  var promises = [];
+  promises.push(Buildings.find({}).lean());
+  promises.push(Streets.find({}).lean());
+  promises.push(Surroundings.find({}).lean());
+
+  Promise.all(promises)
+    .then((results) => {
+      // merge using rest operator - very new
+      var combinedArray = [...results[0], ...results[1], ...results[2]];
+      shuffle(combinedArray);
+      res.json({ result: combinedArray });
+    })
+    .catch((err) => {
+      res.json({ result: false });
+    });
+});
+
 router.get("/users", (req, res) => {
   Users.find({}).then(
     (usersArray) => {
