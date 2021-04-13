@@ -131,6 +131,82 @@ router.get("/surroundings", (req, res) => {
   );
 });
 
+/////***START CREATE POSTS***
+    
+    // CREATE new post (buildings)
+    router.post("/buildings", (req, res) => { 
+      console.log("add new building - endpoint called")
+      // create instance writer model 
+      var newbuilding = new Buildings(); 
+      var reactForm = req.body; 
+  
+      // copy form data into instance. nice. 
+      Object.assign(newbuilding, reactForm); 
+  
+      // for debug only 
+      console.log(">>> ", reactForm); 
+  
+      newbuilding.save().then( 
+      (result) => { 
+          return res.json(result); 
+      }, 
+      () => { 
+          return res.send("problem adding new building"); 
+      } 
+      ); 
+  }); 
+  // end CREATE new post (buildings)
+
+  // CREATE new post (streets)
+  router.post("/streets", (req, res) => { 
+      console.log("add new street - endpoint called")
+      // create instance writer model 
+      var newstreet = new Streets(); 
+      var reactForm = req.body; 
+  
+      // copy form data into instance. nice. 
+      Object.assign(newstreet, reactForm); 
+  
+      // for debug only 
+      console.log(">>> ", reactForm); 
+  
+      newstreet.save().then( 
+      (result) => { 
+          return res.json(result); 
+      }, 
+      () => { 
+          return res.send("problem adding new street"); 
+      } 
+      ); 
+  }); 
+  // end CREATE new post (streets)
+
+  // CREATE new post (surroundings)
+  router.post("/surroundings", (req, res) => { 
+      console.log("add new surrounding - endpoint called")
+      // create instance writer model 
+      var newsurrounding = new Surroundings(); 
+      var reactForm = req.body; 
+  
+      // copy form data into instance. nice. 
+      Object.assign(newsurrounding, reactForm); 
+  
+      // for debug only 
+      console.log(">>> ", reactForm); 
+  
+      newsurrounding.save().then( 
+      (result) => { 
+          return res.json(result); 
+      }, 
+      () => { 
+          return res.send("problem adding new surrounding"); 
+      } 
+      ); 
+  }); 
+  // end CREATE new post (surroundings)
+
+/////***END CREATE POSTS***
+
 //Catch bad endpoints on the api route only
 router.get("/*", (req, res) => {
   return res.json({ result: "not a valid endpoint" });
