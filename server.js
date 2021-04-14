@@ -65,18 +65,26 @@ router.get("/bss", (req, res) => {
       res.json({ result: false });
     });
 });
-
-router.get("/bss_username", (req, res) => {
+// example url to call this route:
+//localhost:4000/api/bss_username/Knox%20Church/
+router.get("/bss_username/:term", (req, res) => {
   var promises = [];
-  promises.push(Buildings.find({}).lean());
-  promises.push(Streets.find({}).lean());
-  promises.push(Surroundings.find({}).lean());
+  console.log(">>>>>>> ", req.params.term);
+
+  promises.push(Buildings.find({ title: req.params.term }).limit(1).lean());
+  promises.push(Streets.find({ title: req.params.term }).limit(1).lean());
+  promises.push(Surroundings.find({ title: req.params.term }).limit(1).lean());
+  promises.push(Users.find({ title: req.params.term }).limit(1).lean());
 
   Promise.all(promises)
     .then((results) => {
       // merge using rest operator - very new
-      var combinedArray = [...results[0], ...results[1], ...results[2]];
-      shuffle(combinedArray);
+      var combinedArray = [
+        ...results[0],
+        ...results[1],
+        ...results[2],
+        ...results[3],
+      ];
       res.json({ result: combinedArray });
     })
     .catch((err) => {
@@ -106,7 +114,6 @@ router.get("/buildings", (req, res) => {
   );
 });
 
-
 //Get all streets
 router.get("/streets", (req, res) => {
   Streets.find().then(
@@ -132,78 +139,78 @@ router.get("/surroundings", (req, res) => {
 });
 
 /////***START CREATE POSTS***
-    
-    // CREATE new post (buildings)
-    router.post("/buildings", (req, res) => { 
-      console.log("add new building - endpoint called")
-      // create instance writer model 
-      var newbuilding = new Buildings(); 
-      var reactForm = req.body; 
-  
-      // copy form data into instance. nice. 
-      Object.assign(newbuilding, reactForm); 
-  
-      // for debug only 
-      console.log(">>> ", reactForm); 
-  
-      newbuilding.save().then( 
-      (result) => { 
-          return res.json(result); 
-      }, 
-      () => { 
-          return res.send("problem adding new building"); 
-      } 
-      ); 
-  }); 
-  // end CREATE new post (buildings)
 
-  // CREATE new post (streets)
-  router.post("/streets", (req, res) => { 
-      console.log("add new street - endpoint called")
-      // create instance writer model 
-      var newstreet = new Streets(); 
-      var reactForm = req.body; 
-  
-      // copy form data into instance. nice. 
-      Object.assign(newstreet, reactForm); 
-  
-      // for debug only 
-      console.log(">>> ", reactForm); 
-  
-      newstreet.save().then( 
-      (result) => { 
-          return res.json(result); 
-      }, 
-      () => { 
-          return res.send("problem adding new street"); 
-      } 
-      ); 
-  }); 
-  // end CREATE new post (streets)
+// CREATE new post (buildings)
+router.post("/buildings", (req, res) => {
+  console.log("add new building - endpoint called");
+  // create instance writer model
+  var newbuilding = new Buildings();
+  var reactForm = req.body;
 
-  // CREATE new post (surroundings)
-  router.post("/surroundings", (req, res) => { 
-      console.log("add new surrounding - endpoint called")
-      // create instance writer model 
-      var newsurrounding = new Surroundings(); 
-      var reactForm = req.body; 
-  
-      // copy form data into instance. nice. 
-      Object.assign(newsurrounding, reactForm); 
-  
-      // for debug only 
-      console.log(">>> ", reactForm); 
-  
-      newsurrounding.save().then( 
-      (result) => { 
-          return res.json(result); 
-      }, 
-      () => { 
-          return res.send("problem adding new surrounding"); 
-      } 
-      ); 
-  }); 
-  // end CREATE new post (surroundings)
+  // copy form data into instance. nice.
+  Object.assign(newbuilding, reactForm);
+
+  // for debug only
+  console.log(">>> ", reactForm);
+
+  newbuilding.save().then(
+    (result) => {
+      return res.json(result);
+    },
+    () => {
+      return res.send("problem adding new building");
+    }
+  );
+});
+// end CREATE new post (buildings)
+
+// CREATE new post (streets)
+router.post("/streets", (req, res) => {
+  console.log("add new street - endpoint called");
+  // create instance writer model
+  var newstreet = new Streets();
+  var reactForm = req.body;
+
+  // copy form data into instance. nice.
+  Object.assign(newstreet, reactForm);
+
+  // for debug only
+  console.log(">>> ", reactForm);
+
+  newstreet.save().then(
+    (result) => {
+      return res.json(result);
+    },
+    () => {
+      return res.send("problem adding new street");
+    }
+  );
+});
+// end CREATE new post (streets)
+
+// CREATE new post (surroundings)
+router.post("/surroundings", (req, res) => {
+  console.log("add new surrounding - endpoint called");
+  // create instance writer model
+  var newsurrounding = new Surroundings();
+  var reactForm = req.body;
+
+  // copy form data into instance. nice.
+  Object.assign(newsurrounding, reactForm);
+
+  // for debug only
+  console.log(">>> ", reactForm);
+
+  newsurrounding.save().then(
+    (result) => {
+      return res.json(result);
+    },
+    () => {
+      return res.send("problem adding new surrounding");
+    }
+  );
+});
+// end CREATE new post (surroundings)
 
 /////***END CREATE POSTS***
 
@@ -213,27 +220,27 @@ router.get("/*", (req, res) => {
 });
 
 //post user profile to DB
-router.post("/users", (req, res) => { 
-  console.log("add new user - endpoint called")
-  // create instance users model 
-  var newuser = new Users(); 
-  var reactForm = req.body; 
+router.post("/users", (req, res) => {
+  console.log("add new user - endpoint called");
+  // create instance users model
+  var newuser = new Users();
+  var reactForm = req.body;
 
-  // copy form data into instance. nice. 
-  Object.assign(newuser, reactForm); 
+  // copy form data into instance. nice.
+  Object.assign(newuser, reactForm);
 
-  // for debug only 
-  console.log(">>> ", reactForm); 
+  // for debug only
+  console.log(">>> ", reactForm);
 
-  newuser.save().then( 
-    (result) => { 
-      return res.json(result); 
-    }, 
-    () => { 
-      return res.send("problem adding new user"); 
-    } 
-  ); 
-}); 
+  newuser.save().then(
+    (result) => {
+      return res.json(result);
+    },
+    () => {
+      return res.send("problem adding new user");
+    }
+  );
+});
 
 let PORT = 4000;
 app.listen(PORT, () => {
