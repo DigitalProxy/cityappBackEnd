@@ -242,6 +242,45 @@ router.post("/users", (req, res) => {
   );
 });
 
+/////***START DELETE POSTS***
+
+    // DELETE post by filepath (buildings)
+    router.delete("/bss_username/:_id", (req, res) => { 
+      console.table(req.params); 
+      Buildings.deleteOne({ _id: req.params._id }, function (err, result) { 
+      if (err) { 
+          res.send(err); 
+      } else { 
+          res.send(result); 
+      } 
+      }); 
+  }); 
+
+  router.delete("/bss_username/:_id", (req, res) => { 
+    console.table(req.params); 
+    Streets.deleteOne({ _id: req.params._id }, function (err, result) { 
+    if (err) { 
+        res.send(err); 
+    } else { 
+        res.send(result); 
+    } 
+    }); 
+}); 
+
+router.delete("/bss_username/:_id", (req, res) => { 
+  console.table(req.params); 
+  Surroundings.deleteOne({ _id: req.params._id }, function (err, result) { 
+  if (err) { 
+      res.send(err); 
+  } else { 
+      res.send(result); 
+  } 
+  }); 
+}); 
+  // end DELETE post by filepath (buildings)
+
+
+
 let PORT = 4000;
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
