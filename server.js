@@ -279,8 +279,45 @@ router.post("/users", (req, res) => {
     }); 
     // end DELETE post by filepath (buildings)
 
-
-
+    //start DELETE post by Collection & _id (buildings)
+        router.delete("/buildings/:_id", (req, res) => { 
+          console.table(req.params); 
+          Buildings.deleteOne({ _id: req.params._id }, function (err, result) { 
+          if (err) { 
+              res.send(err); 
+          } else { 
+              res.send(result); 
+          } 
+          }); 
+      }); 
+      // end DELETE post by _id (buildings)
+  
+      // DELETE post by filepath (streets)
+      router.delete("/streets/:_id", (req, res) => { 
+          console.table(req.params); 
+          Streets.deleteOne({ _id: req.params._id }, function (err, result) { 
+          if (err) { 
+              res.send(err); 
+          } else { 
+              res.send(result); 
+          } 
+          }); 
+      }); 
+      // end DELETE post by _id (streets)
+  
+      // DELETE post by _id (surroundings)
+      router.delete("/surroundings/:filepath", (req, res) => { 
+          console.table(req.params); 
+          Surroundings.deleteOne({ _id: req.params._id }, function (err, result) { 
+          if (err) { 
+              res.send(err); 
+          } else { 
+              res.send(result); 
+          } 
+          }); 
+      }); 
+      // end DELETE post by _id (surroundings)
+    
 let PORT = 4000;
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
