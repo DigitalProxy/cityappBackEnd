@@ -244,7 +244,7 @@ router.post("/users", (req, res) => {
 
 /////***START DELETE POSTS***
 
-    // DELETE post by filepath (buildings)
+    //DELETE post by filepath (buildings)
     router.delete("/bss_username/:_id", (req, res) => { 
       console.table(req.params); 
       Buildings.deleteOne({ _id: req.params._id }, function (err, result) { 
@@ -254,8 +254,12 @@ router.post("/users", (req, res) => {
           res.send(result); 
       } 
       }); 
-     }); 
+     });
+    //end DELETE post by filepath (buildings)
+ 
 
+
+    //DELETE post by filepath (streets)
     router.delete("/bss_username/:_id", (req, res) => { 
       console.table(req.params); 
       Streets.deleteOne({ _id: req.params._id }, function (err, result) { 
@@ -266,7 +270,9 @@ router.post("/users", (req, res) => {
       } 
       }); 
     }); 
+    //end DELETE post by filepath (streets)
 
+    //DELETE post by filepath (surroundings)
     router.delete("/bss_username/:_id", (req, res) => { 
       console.table(req.params); 
       Surroundings.deleteOne({ _id: req.params._id }, function (err, result) { 
@@ -277,7 +283,7 @@ router.post("/users", (req, res) => {
       } 
       }); 
     }); 
-    // end DELETE post by filepath (buildings)
+    //end DELETE post by filepath (surroundings)
 
     //start DELETE post by Collection & _id (buildings)
         router.delete("/buildings/:_id", (req, res) => { 
