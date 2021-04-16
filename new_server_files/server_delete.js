@@ -67,7 +67,7 @@
     //end DELETE post by (single collection) (streets & _id)
 
     //startDELETE post by (single collection) (surroundings & _id)
-    router.delete("/surroundings/:filepath", (req, res) => { 
+    router.delete("/surroundings/:_id", (req, res) => { 
         console.table(req.params); 
         Surroundings.deleteOne({ _id: req.params._id }, function (err, result) { 
         if (err) { 

@@ -138,6 +138,75 @@ router.get("/surroundings", (req, res) => {
   );
 });
 
+router.get("/buildings/:_id", (req, res) => { 
+  console.table(req.params); 
+  Buildings.findOne({ _id: req.params._id }, function (err, result) { 
+  if (err) { 
+      res.send(err); 
+  } else { 
+      res.send(result); 
+  } 
+  }); 
+}); 
+
+router.get("/streets/:_id", (req, res) => { 
+  console.table(req.params); 
+  Streets.findOne({ _id: req.params._id }, function (err, result) { 
+  if (err) { 
+      res.send(err); 
+  } else { 
+      res.send(result); 
+  } 
+  }); 
+}); 
+
+router.get("/surroundings/:_id", (req, res) => { 
+  console.table(req.params); 
+  Surroundings.findOne({ _id: req.params._id }, function (err, result) { 
+  if (err) { 
+      res.send(err); 
+  } else { 
+      res.send(result); 
+  } 
+  }); 
+}); 
+
+
+//start DELETE
+router.delete("/buildings/:_id", (req, res) => { 
+  console.table(req.params); 
+  Buildings.deleteOne({ _id: req.params._id }, function (err, result) { 
+  if (err) { 
+      res.send(err); 
+  } else { 
+      res.send(result); 
+  } 
+  }); 
+}); 
+
+router.delete("/streets/:_id", (req, res) => { 
+  console.table(req.params); 
+  Streets.deleteOne({ _id: req.params._id }, function (err, result) { 
+  if (err) { 
+      res.send(err); 
+  } else { 
+      res.send(result); 
+  } 
+  }); 
+}); 
+
+router.delete("/surroundings/:_id", (req, res) => { 
+  console.table(req.params); 
+  Surroundings.deleteOne({ _id: req.params._id }, function (err, result) { 
+  if (err) { 
+      res.send(err); 
+  } else { 
+      res.send(result); 
+  } 
+  }); 
+}); 
+//end DELETE
+
 /////***START CREATE POSTS***
 
 // CREATE new post (buildings)
@@ -213,6 +282,204 @@ router.post("/surroundings", (req, res) => {
 // end CREATE new post (surroundings)
 
 /////***END CREATE POSTS***
+
+////**start PUT POSTS***
+ // UPDATE buildings by id
+ router.put("/buildings/:_id", (req, res) => { 
+  console.log("hey buildings")
+      Buildings.findOne({ _id: req.params._id }, function (err, objFromMongoDB) { 
+      if (err) 
+          return res.json({ 
+          result: false, 
+          }); 
+  
+      var data = req.body; 
+  
+      if (objFromMongoDB === null) { 
+          return res.json({ 
+          result: false, 
+          }); 
+      } 
+      Object.assign(objFromMongoDB, data); 
+      objFromMongoDB.save().then( 
+          (response) => { 
+          res.json({ 
+              result: response, 
+          }); 
+          }, 
+          (error) => { 
+          res.json({ 
+              result: false, 
+          }); 
+          } 
+      ); 
+      }); 
+  }); 
+  // end UPDATE buildings by id
+
+
+// UPDATE surroundings by id
+router.put("/surroundings/:_id", (req, res) => { 
+  console.log("hey surroundings")
+      Surroundings.findOne({ _id: req.params._id }, function (err, objFromMongoDB) { 
+      if (err) 
+          return res.json({ 
+          result: false, 
+          }); 
+  
+      var data = req.body; 
+  
+      if (objFromMongoDB === null) { 
+          return res.json({ 
+          result: false, 
+          }); 
+      } 
+      Object.assign(objFromMongoDB, data); 
+      objFromMongoDB.save().then( 
+          (response) => { 
+          res.json({ 
+              result: response, 
+          }); 
+          }, 
+          (error) => { 
+          res.json({ 
+              result: false, 
+          }); 
+          } 
+      ); 
+      }); 
+  }); 
+  // end UPDATE surroundings by id
+
+// UPDATE streets by id
+router.put("/streets/:_id", (req, res) => { 
+  console.log("hey street")
+      Streets.findOne({ _id: req.params._id }, function (err, objFromMongoDB) { 
+      if (err) 
+          return res.json({ 
+          result: false, 
+          }); 
+  
+      var data = req.body; 
+  
+      if (objFromMongoDB === null) { 
+          return res.json({ 
+          result: false, 
+          }); 
+      } 
+      Object.assign(objFromMongoDB, data); 
+      objFromMongoDB.save().then( 
+          (response) => { 
+          res.json({ 
+              result: response, 
+          }); 
+          }, 
+          (error) => { 
+          res.json({ 
+              result: false, 
+          }); 
+          } 
+      ); 
+      }); 
+  }); 
+
+  
+
+//end PUT post by filepath (buildings)
+
+//start PUT post by filepath (streets)
+router.put("/streets/:_id", (req, res) => { 
+  console.log("hey image")
+  Streets.findOne({ filepath: req.params.filepath }, function (err, objFromMongoDB) { 
+  if (err) 
+      return res.json({ 
+      result: false, 
+      }); 
+
+  var data = req.body; 
+
+  if (objFromMongoDB === null) { 
+      return res.json({ 
+      result: false, 
+      }); 
+  } 
+  Object.assign(objFromMongoDB, data); 
+  objFromMongoDB.save().then( 
+      (response) => { 
+      res.json({ 
+          result: response, 
+      }); 
+      }, 
+      (error) => { 
+      res.json({ 
+          result: false, 
+      }); 
+      } 
+  ); 
+  }); 
+  }); 
+//end PUT post by filepath (streets)
+
+//start PUT post by filepath (surroundings)
+router.put("/surroundings/:_id", (req, res) => { 
+  console.log("hey image")
+  Surroundings.findOne({ filepath: req.params.filepath }, function (err, objFromMongoDB) { 
+  if (err) 
+      return res.json({ 
+      result: false, 
+      }); 
+
+  var data = req.body; 
+
+  if (objFromMongoDB === null) { 
+      return res.json({ 
+      result: false, 
+      }); 
+  } 
+  Object.assign(objFromMongoDB, data); 
+  objFromMongoDB.save().then( 
+      (response) => { 
+      res.json({ 
+          result: response, 
+      }); 
+      }, 
+      (error) => { 
+      res.json({ 
+          result: false, 
+      }); 
+      } 
+  ); 
+  }); 
+  }); 
+//end PUT post by filepath (surroundings)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Catch bad endpoints on the api route only
 router.get("/*", (req, res) => {

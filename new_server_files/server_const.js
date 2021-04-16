@@ -4,13 +4,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const conn = require("./connection");
+const conn = require("../connection");
 
 //One model per collection
-const Buildings = require("./models/buildings-model");
-const Streets = require("./models/streets-model");
-const Surroundings = require("./models/surroundings-model");
-const Users = require("./models/users-model");
+const Buildings = require("../models/buildings-model");
+const Streets = require("../models/streets-model");
+const Surroundings = require("../models/surroundings-model");
+const Users = require("../models/users-model");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
